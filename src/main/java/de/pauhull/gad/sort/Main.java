@@ -7,20 +7,36 @@ import java.util.Random;
 public class Main {
 
     public static void main(String[] args) {
-        var algorithms = new SortingAlgorithm[]{
+        testAlgos(new SortingAlgorithm[]{
                 new BubbleSort(),
                 new SelectionSort(),
                 new InsertionSort(),
                 new QuickSort(),
                 new MergeSort(),
-        };
+                new RadixSort(),
+        }, 10000);
 
-        int n = 100000;
-        System.out.println("Testing sort algorithms with n=" + n);
+        testAlgos(new SortingAlgorithm[]{
+                new SelectionSort(),
+                new InsertionSort(),
+                new QuickSort(),
+                new MergeSort(),
+                new RadixSort(),
+        }, 100000);
+
+        testAlgos(new SortingAlgorithm[]{
+                new QuickSort(),
+                new MergeSort(),
+                new RadixSort(),
+        }, 10000000);
+    }
+
+    private static void testAlgos(SortingAlgorithm[] algorithms, int n) {
+        System.out.println("Testing sorting algorithms with n=" + n);
 
         var random = new Random(0);
         var check = new ArrayList<Integer>();
-        for(int i = 0; i < 100000; i++) {
+        for(int i = 0; i < n; i++) {
             check.add(i);
         }
         Collections.shuffle(check, random);
@@ -36,6 +52,7 @@ public class Main {
             System.out.println("Correctly sorted: " + sorted);
             System.out.println("Time per item: " + nsPerItem + "ns");
         }
+        System.out.println();
     }
 
     private static boolean isSorted(int[] arr) {
